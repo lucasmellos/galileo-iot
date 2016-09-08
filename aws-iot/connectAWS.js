@@ -1,13 +1,13 @@
 var awsIot = require('aws-iot-device-sdk');
 
-var myThingName = 'intel_galileo';
+var myThingName = 'NOME DO CLIENTE'; // Nome do cliente
 
 var thingShadows = awsIot.thingShadow({
-   keyPath: './cert/6cf88b301c-private.pem.key',   // path of private key - change the name accourding to your key name
-  certPath: './cert/6cf88b301c-certificate.pem.crt', // path of certificate - change the name accourding to your cert name
+   keyPath: './cert/NOME DO CERTIFICADO-private.pem.key',   // path of private key - change the name accourding to your key name
+  certPath: './cert/NOME DO CERTIFICADO-certificate.pem.crt', // path of certificate - change the name accourding to your cert name
     caPath: './cert/rootCA.pem',  // path of root file
   clientId: myThingName,
-    region: 'us-west-2'  // your region
+    region: 'us-west-2'  // Sua região
 });
 
 mythingstate = {
@@ -26,13 +26,13 @@ mythingstate["state"]["reported"]["LocalIP"] = networkInterfaces['enp0s20f6'][0]
 var msg = "{\"key\":\"value\"}";
 
 thingShadows.on('connect', function() {
-  console.log("Connected...");
-  console.log("Registering...");
+  console.log("Conectado...");
+  console.log("Registrando...");
   thingShadows.register( myThingName );
 
   // An update right away causes a timeout error, so we wait about 2 seconds
   setTimeout( function() {
-    console.log("Updating my IP address...");
+    console.log("Updating meu IP address...");
     clientTokenIP = thingShadows.update(myThingName, mythingstate);
     console.log("Update:" + clientTokenIP);
   }, 2500 );
